@@ -3,19 +3,23 @@ var auth = auth || {};
 auth = (()=>{
     const WHEN_ERR = '호출하는 auth js를 찾을 수 없습니다 .'
     let context, js ;
-    let auth_vuejs ;
-    let routerjs;
+    let auth_vuejs , brd_vuejs ;
+    let routerjs,brdjs;
     let init=()=>{
        context = $.ctx()
        js = $.js()
        auth_vuejs = js+'/vue/auth_vue.js'
        routerjs = js + '/cmm/router.js'
+       brdjs = js +'/brd/brd.js'
+       brd_vuejs = js +'/vue/brd_vue.js'
     }
     let onCreate=()=>{
        init();
        $.when(
                $.getScript(auth_vuejs),
-               $.getScript(routerjs)
+               $.getScript(routerjs),
+               $.getScript(brdjs),
+               $.getScript(brd_vuejs)
        ).done(()=>{
            setContentView()
        }).fail(()=>{
@@ -101,6 +105,7 @@ auth = (()=>{
        .click(e=>{
            e.preventDefault()
             alert('벅스크롤링')
+            brd.onCreate()
             
        })
        
